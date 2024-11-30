@@ -84,16 +84,8 @@ if st.button("Generate QR Code"):
         qr_code_img.save(buf, format="PNG")
         buf.seek(0)
 
-        # Debugging: Check the buffer type and contents
-        st.write(f"Buffer type: {type(buf)}")
-        st.write(f"Buffer length: {len(buf.getvalue())} bytes")
-
-        # Try opening the image from the buffer
-        try:
-            img = Image.open(buf)
-            st.image(img, caption="Your Custom QR Code", use_container_width=True)
-        except Exception as e:
-            st.error(f"Error opening image from buffer: {e}")
+        # Display the QR code using Streamlit's st.image
+        st.image(buf, caption="Your Custom QR Code", use_container_width=True)
 
         # Save the image to a file
         i = 1
