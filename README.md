@@ -1,4 +1,23 @@
 
+
+<p align="center">
+  <a href="https://github.com/CodderPrince">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=50&pause=2000&color=FFFFFF&center=true&vCenter=true&width=1000&lines=Scan+Me" alt="Colorful QR Code Generator">
+  </a>
+</p>
+
+
+
+<p align="center">
+  <a href="https://github.com/CodderPrince">
+    <img src="https://github.com/CodderPrince/Streamlit-Project/blob/main/ColorfullQRcode/custom_QR_code5.png" alt="Custom Colorful QR Code" width="500">
+  </a>
+</p>
+
+
+
+---
+
 <p align="center">
   <a href="https://github.com/CodderPrince">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=49&pause=2000&color=FFD700&center=true&vCenter=true&width=1000&lines=Colorful+QR+Code+Generator" alt="Colorful QR Code Generator">
