@@ -84,9 +84,9 @@ if st.button("Generate QR Code"):
         qr_code_img.save(buf, format="PNG")
         buf.seek(0)  # Ensure buffer pointer is at the start
 
-        # Display the QR code using Streamlit's st.image
+        # Display the QR code using Streamlit's st.image (removed 'use_container_width')
         try:
-            st.image(buf, caption="Your Custom QR Code", use_container_width=True)
+            st.image(buf, caption="Your Custom QR Code")  # Removed use_container_width
         except Exception as e:
             st.error(f"Error displaying image: {e}")
 
