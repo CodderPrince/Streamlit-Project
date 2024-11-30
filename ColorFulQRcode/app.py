@@ -1,5 +1,6 @@
 import os
-from PIL import Image, ImageDraw, ImageFilter, ImageColor
+import io
+from PIL import Image, ImageColor
 import streamlit as st
 import qrcode
 import numpy as np
@@ -69,22 +70,41 @@ if st.button("Generate QR Code"):
             st.error(f"Invalid color input: {e}")
             st.stop()
 
+        # Generate gradient background
         gradient_bg = generate_gradient_background(400, 400, start_color, end_color)
+        
+        # Generate QR Code
         qr_code_img = generate_qr_code_with_logo(link, logo_file, color=color, bg_color=gradient_bg)
 
-        # Convert to RGB before displaying
+        # Convert to RGB before displaying (Streamlit doesn't support RGBA well)
         qr_code_img = qr_code_img.convert("RGB")
 
-        # Save and display the QR code
+        # Debugging: Check the image mode and size
+        st.write("Image mode:", qr_code_img.mode)
+        st.write("Image size:", qr_code_img.size)
+
+        # Save to buffer for Streamlit
+        buf = io.BytesIO()
+        qr_code_img.save(buf, format="PNG")
+        buf.seek(0)
+
+        # Display the QR code in Streamlit
+        st.image(buf, caption="Your Custom QR Code", use_container_width=True)
+
+        # Save the image to a file
         i = 1
         filename = "custom_QR_code"
         while os.path.exists(f"{filename}{i}.png"):
             i += 1
         filename = f"{filename}{i}.png"
 
-        st.image(qr_code_img, caption="Your Custom QR Code", use_container_width=True)  # Corrected Line
-        qr_code_img.save(filename)
-        with open(filename, "rb") as file:
-            st.download_button("Download QR Code", file, file_name=filename, mime="image/png")
+        # Save the buffer to the file system for download
+        buf.seek(0)
+        with open(filename, "wb") as file:
+            file.write(buf.read())
+
+        # Allow the user to download the generated QR code image
+        buf.seek(0)
+        st.download_button("Download QR Code", buf, file_name=filename, mime="image/png")
     else:
         st.error("Please enter a link or text.")
