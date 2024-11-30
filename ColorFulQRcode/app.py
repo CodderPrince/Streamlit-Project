@@ -72,13 +72,17 @@ if st.button("Generate QR Code"):
         gradient_bg = generate_gradient_background(400, 400, start_color, end_color)
         qr_code_img = generate_qr_code_with_logo(link, logo_file, color=color, bg_color=gradient_bg)
 
+        # Convert to RGB before displaying
+        qr_code_img = qr_code_img.convert("RGB")
+
+        # Save and display the QR code
         i = 1
         filename = "custom_QR_code"
         while os.path.exists(f"{filename}{i}.png"):
             i += 1
         filename = f"{filename}{i}.png"
 
-        st.image(qr_code_img, caption="Your Custom QR Code", use_container_width=True) #Corrected Line
+        st.image(qr_code_img, caption="Your Custom QR Code", use_container_width=True)  # Corrected Line
         qr_code_img.save(filename)
         with open(filename, "rb") as file:
             st.download_button("Download QR Code", file, file_name=filename, mime="image/png")
