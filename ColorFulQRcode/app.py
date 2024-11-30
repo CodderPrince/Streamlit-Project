@@ -79,17 +79,21 @@ if st.button("Generate QR Code"):
         # Convert to RGB before displaying (Streamlit doesn't support RGBA well)
         qr_code_img = qr_code_img.convert("RGB")
 
-        # Debugging: Check the image mode and size
-        st.write("Image mode:", qr_code_img.mode)
-        st.write("Image size:", qr_code_img.size)
-
         # Save to buffer for Streamlit
         buf = io.BytesIO()
         qr_code_img.save(buf, format="PNG")
         buf.seek(0)
 
-        # Display the QR code in Streamlit
-        st.image(buf, caption="Your Custom QR Code", use_container_width=True)
+        # Debugging: Check the buffer type and contents
+        st.write(f"Buffer type: {type(buf)}")
+        st.write(f"Buffer length: {len(buf.getvalue())} bytes")
+
+        # Try opening the image from the buffer
+        try:
+            img = Image.open(buf)
+            st.image(img, caption="Your Custom QR Code", use_container_width=True)
+        except Exception as e:
+            st.error(f"Error opening image from buffer: {e}")
 
         # Save the image to a file
         i = 1
